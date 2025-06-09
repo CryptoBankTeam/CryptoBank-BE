@@ -6,6 +6,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -60,4 +61,26 @@ func Registration(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"message": "Пользователь успешно создан"})
+}
+
+func SetWallet(c *gin.Context) {
+	id, exists := c.Get("id")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Not authorized"})
+		return
+	}
+	var req struct {
+		AdressWallet string `json:"adress_wallet"`
+	}
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+		return
+	}
+	// Обновляем адрес кошелька пользователя
+	log.Println(req.AdressWallet)
+	if err := conf.DB.Model(&userstr.User{}).Where("id = ?", id).Update("adress_wallet", req.AdressWallet).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "DB error"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"status": "ok"})
 }

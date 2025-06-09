@@ -1,8 +1,7 @@
 package conf
 
 import (
-	offerstr "be/offers/offerStr"
-	offertakenstr "be/offers/offerTakenStr"
+	"be/offers/loanStr"
 	userstr "be/userStr"
 	"log"
 
@@ -16,7 +15,7 @@ var DB *gorm.DB
 func Cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, PATCH")
 		c.Writer.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
 		if c.Request.Method == "OPTIONS" {
 			c.AbortWithStatus(204)
@@ -40,10 +39,8 @@ func MigrationTables() {
 	if err := DB.AutoMigrate(&userstr.User{}); err != nil {
 		log.Fatalf("Failed to migrate user table: %v", err)
 	}
-	if err := DB.AutoMigrate(&offerstr.Offer{}); err != nil {
-		log.Fatalf("Failed to migrate offer table: %v", err)
-	}
-	if err := DB.AutoMigrate(&offertakenstr.OfferTaken{}); err != nil {
-		log.Fatalf("Failed to migrate offer table: %v", err)
+
+	if err := DB.AutoMigrate(&loanStr.Loan{}); err != nil {
+		log.Fatalf("Failed to migrate Loan table: %v", err)
 	}
 }
