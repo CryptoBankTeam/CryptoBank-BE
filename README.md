@@ -17,7 +17,7 @@
 | Тестирование    | Hardhat                                                                    |
 | Деплой          | Hardhat                                                                    |
 
-![Component Diagram] (https://github.com/CryptoBankTeam/CryptoBank-BE/issues/1#issue-3187524249)
+![Component Diagram](https://github.com/CryptoBankTeam/CryptoBank-BE/issues/1#issue-3187524249)
 
 ## Установка и запуск
 1. Убедитесь, что установлены:
