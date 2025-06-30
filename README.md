@@ -32,4 +32,11 @@
 4. Запустите сервер
    ```bash
    go run main.go
-5. 
+5. Запустите слушатель событий
+   ```bash
+   cd event-sync
+   node.js sync-loans.js
+5. Запустите планировщик
+   ```bash
+   cd scripts
+   node.js cronOverdue.js
